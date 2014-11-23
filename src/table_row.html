@@ -1,0 +1,76 @@
+<!--edit row-->
+<td class="vert-align"
+    data-ng-if="isEditRow(item) && !toHideIdColumn">
+    {{current.id}}
+</td>
+
+<td class="vert-align"
+    data-ng-if="isEditRow(item)"
+    data-ng-repeat="column in columns">
+    <div data-ng-if="!column.readonly">
+        <div data-ng-switch="column.editor">
+            <div data-ng-switch-when="lookup">
+                <ui-select ng-model="current[column.fieldName]">
+                    <ui-select-match placeholder="Select...">{{$select.selected[column.lookupDisplayName]}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="item[column.lookupValue] as item in column.lookupSource | propsFilter: {search: $select.search, props: [column.lookupDisplayName]}">
+                        <span ng-bind-html="item[column.lookupDisplayName] | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <input data-ng-switch-when="datepicker" type="text" class="form-control" sa-date-picker
+                   ng-model="current[column.fieldName]" ng-options="{weekStart: 1}">
+            <input data-ng-switch-when="numeric" type="number" class="form-control"
+                   data-ng-model="current[column.fieldName]">
+            <input data-ng-switch-default type="text" class="form-control" data-ng-model="current[column.fieldName]">
+        </div>
+    </div>
+    <div data-ng-if="column.readonly">
+        <div ng-switch="column.editor">
+            <div ng-switch-when="lookup">
+                {{item[column.fieldName] ? item[column.fieldName][column.lookupDisplayName]: undefined}}
+            </div>
+            <div ng-switch-default>{{item[column.fieldName]}}</div>
+        </div>
+    </div>
+</td>
+
+<td class="vert-align"
+    data-ng-if="isEditRow(item)">
+    <button class="btn btn-primary" type="button" data-ng-click="save(item)">
+        <i class="fa fa-pencil-square-o"></i> Save
+    </button>
+    <button class="btn btn-warning" type="button" data-ng-click="cancel()">
+        <i class="fa fa-times"></i> Cancel
+    </button>
+</td>
+<!--end edit row-->
+
+<!--regular row-->
+<td class="vert-align"
+    data-ng-if="!isEditRow(item) && !toHideIdColumn">
+    {{item.id}}
+</td>
+
+<td class="vert-align"
+    data-ng-if="!isEditRow(item)"
+    data-ng-repeat="column in columns">
+    <div ng-switch="column.editor">
+        <div ng-switch-when="lookup">
+            {{lookup(column.lookupSource, column.lookupValue, column.lookupDisplayName, item[column.fieldName])}}
+        </div>
+        <div ng-switch-default>{{item[column.fieldName]}}</div>
+    </div>
+</td>
+
+<td class="vert-align"
+    data-ng-if="!isEditRow(item)">
+    <button class="btn btn-primary" type="button" data-ng-click="edit(item)">
+        <i class="fa fa-pencil-square-o"></i> Edit
+    </button>
+    <button class="btn btn-danger" type="button" data-ng-click="delete(item)">
+        <i class="fa fa-times"></i> Delete
+    </button>
+</td>
+<!--end regular row-->

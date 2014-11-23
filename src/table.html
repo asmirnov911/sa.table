@@ -1,0 +1,53 @@
+<div>
+    <div class="row">
+        <br/>
+
+        <div class="col-xs-5">
+            <div class="input-group custom-search-form">
+                <input type="text" class="form-control" placeholder="Search..." data-ng-model="query">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" data-ng-click="query = null">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </span>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <button class="btn btn-primary" type="button" data-ng-click="add()">
+                <i class="fa fa-plus"></i> New
+            </button>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    <div class="row">
+        <br/>
+
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped table-fixed">
+                    <thead>
+                    <tr>
+                        <th data-ng-if="!toHideIdColumn">ID</th>
+                        <th data-ng-repeat="column in columns">{{column.displayName}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr data-ng-if="current && !current.id"
+                        data-ng-include="'/html/directives/table_row.html'"
+                        ng-init="item = null">
+                    </tr>
+
+                    <tr data-ng-repeat="item in items | filter: search"
+                        data-ng-include="'/html/directives/table_row.html'">
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+    </div>
+
+</div>
