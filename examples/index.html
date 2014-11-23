@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Examples</title>
+
+    <!-- Bootstrap -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Toastr -->
+    <link href="../bower_components/toastr/toastr.css" rel="stylesheet">
+
+</head>
+<body data-ng-controller="AppCtrl">
+<a href="#" ng-click="view=1">Example 1</a>
+<a href="#" ng-click="view=2">Example 2</a>
+<br/>
+<br/>
+
+<div ng-init="view=1" ng-if="view==1">
+    Example 1
+    <sa-table service="service" columns="columns"></sa-table>
+</div>
+<div ng-if="view==2">
+    Example 2
+</div>
+
+<script data-main="init" src="../bower_components/requirejs/require.js"></script>
+</body>
+</html>
